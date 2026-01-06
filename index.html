@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airline Crew Scheduling System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* CSS VARIABLES & RESET */
+:root {
+  --primary: #0f4c75;
+  --secondary: #3282b8;
+  --accent: #bbe1fa;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #333;
+  --success: #28a745;
+  --danger: #dc3545;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 42px;
+  margin: 0;
+  font-weight: 700;
+}
+
+header h3 {
+  font-weight: 400;
+  margin-top: 10px;
+  color: var(--accent);
+}
+
+/* NAVIGATION */
+nav {
+  background: white;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav button {
+  border: none;
+  background: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 15px;
+  color: #555;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+nav button:hover {
+  color: var(--primary);
+  background-color: #f0f0f0;
+  border-radius: 5px 5px 0 0;
+}
+
+nav button.active {
+  border-bottom: 3px solid var(--secondary);
+  color: var(--secondary);
+}
+
+/* CONTAINER & SECTIONS */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+section {
+  display: none; /* Hidden by default */
+  animation: fadeIn 0.5s;
+}
+
+section.active {
+  display: block; /* Visible when active */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: var(--primary);
+  font-family: 'Montserrat', sans-serif;
+  border-left: 5px solid var(--secondary);
+  padding-left: 15px;
+  margin-bottom: 25px;
+}
+
+h3 {
+  color: var(--secondary);
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 30px;
+}
+
+p, li {
+  font-size: 16px;
+  color: #555;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 15px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary);
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* DEMO INPUT/OUTPUT */
+.demo-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .demo-split { grid-template-columns: 1fr; }
+}
+
+textarea {
+  width: 100%;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+pre {
+  background: #1e272e;
+  color: #d2dae2;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  min-height: 200px;
+}
+
+button.run-btn {
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+button.run-btn:hover {
+  background: #218838;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+}
+.bg-green { background-color: var(--success); }
+.bg-blue { background-color: var(--secondary); }
+.bg-dark { background-color: var(--primary); }
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>✈️ Airline Crew Scheduling System</h1>
+  <h3>Optimizing Aviation Logistics using Advanced Algorithms</h3>
+</header>
+
+<nav>
+  <button class="active" onclick="switchTab('overview')">📋 Overview</button>
+  <button onclick="switchTab('analysis')">📊 Algorithm Analysis</button>
+  <button onclick="switchTab('reflections')">🧠 Reflections</button>
+  <button onclick="switchTab('sdg')">🌍 SDGs</button>
+  <button onclick="switchTab('demo')">💻 Live Demo</button>
+  <button onclick="switchTab('about')">ℹ️ About</button>
+</nav>
+
+<div class="container">
+
+  <section id="overview" class="active">
+    <div class="card">
+      <h2>1. Project Overview & Details</h2>
+      
+      <h3>The Problem</h3>
+      <p>Airlines operate on tight margins where efficiency is everything. Manual crew scheduling leads to:</p>
+      <ul>
+        <li><b>Operational Conflicts:</b> Crew double-booked on overlapping flights.</li>
+        <li><b>Safety Risks:</b> Violations of mandatory rest periods (pilot fatigue).</li>
+        <li><b>Financial Loss:</b> Excessive “paid idle time” where crew wait at airports.</li>
+      </ul>
+
+      <h3>The Solution</h3>
+      <p>We developed a C++ application that automates the rostering process. By treating time as a linear resource and crew as distinct entities, our system generates a conflict-free schedule in seconds.</p>
+
+      <h3>Key Features</h3>
+      <ul>
+        <li><b>Conflict Detection:</b> Automatically flags if a pilot is busy.</li>
+        <li><b>Rest Enforcement:</b> Adds mandatory “cool-down” periods (e.g., 15 mins) post-flight.</li>
+        <li><b>Cost Optimization:</b> Uses greedy logic to chain flights together, minimizing idle gaps.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="analysis">
+    <div class="card">
+      <h2>2. Analysis of Algorithms</h2>
+      <p>We utilized a “Sort-Search-Assign” pipeline to solve the problem efficiently.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Algorithm Used</th>
+            <th>Complexity</th>
+            <th>Why this choice?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Timeline</td>
+            <td>Merge Sort</td>
+            <td>O(N log N)</td>
+            <td>We need a stable sort to arrange flights chronologically. QuickSort is unstable and could mess up the order of simultaneous flights.</td>
+          </tr>
+          <tr>
+            <td>Crew Lookup</td>
+            <td>Binary Search</td>
+            <td>O(log M)</td>
+            <td>Searching linearly through 5,000+ crew members is too slow (O(M)). Binary search finds the best fit instantly.</td>
+          </tr>
+          <tr>
+            <td>Assignment</td>
+            <td>Greedy Strategy</td>
+            <td>O(1)</td>
+            <td>A “Greedy” choice (picking the pilot who waits the least) provides a locally optimal solution that saves costs globally.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Overall Complexity: O(N log N)</h3>
+      <p>The system is dominated by the sorting step, making it highly scalable for thousands of daily flights.</p>
+    </div>
+  </section>
+
+  <section id="reflections">
+    <div class="card">
+      <h2>3. Individual Reflections</h2>
+      
+      <p><b>Course:</b> Design and Analysis of Algorithms (DAA)</p>
+
+      <h3>Learning Outcomes</h3>
+      <p>Building this project shifted my perspective from just “writing code” to “engineering solutions.”</p>
+      <ul>
+        <li><b>Algorithmic selection matters:</b> I initially considered checking every pilot for every flight, but realized that would be O(N × M). Switching to Binary Search reduced this to O(N log M), which is a massive performance gain.</li>
+        <li><b>Handling Constraints:</b> The hardest part was not the logic, but the constraints (like the mandatory rest period). I learned how to modify standard algorithms to fit real-world rules.</li>
+        <li><b>Standard Template Library (STL):</b> I gained deep proficiency in C++ STL tools like <code>std::sort</code>, <code>std::lower_bound</code>, and structs.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sdg">
+    <div class="card">
+      <h2>4. Sustainable Development Goals (SDG)</h2>
+      <p>This project aligns with the United Nations SDGs to promote a better future.</p>
+
+      <h3>💚 SDG 3: Good Health and Well-being</h3>
+      <p><b>Target:</b> Prevent workforce burnout.<br>
+      <b>Implementation:</b> By algorithmically enforcing a strict 15-minute rest period after every flight, we prevent pilot fatigue. This ensures the physical and mental well-being of the crew and the safety of passengers.</p>
+
+      <h3>📈 SDG 8: Decent Work and Economic Growth</h3>
+      <p><b>Target:</b> Higher economic productivity through diversification and technological upgrading.<br>
+      <b>Implementation:</b> The system optimizes the workforce, ensuring “Decent Work” (predictable schedules) and preventing financial waste (idle time), which contributes to the airline’s economic stability.</p>
+
+      <h3>🏗️ SDG 9: Industry, Innovation, and Infrastructure</h3>
+      <p><b>Target:</b> Upgrade infrastructure and retrograde industries.<br>
+      <b>Implementation:</b> We replaced error-prone manual rostering with a modern computational infrastructure. This is a direct upgrade to aviation logistics efficiency.</p>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="card">
+      <h2>C++ Logic Live Simulation</h2>
+      <p>
+        The inputs below are processed using the exact <b>Greedy + Binary Search</b> logic from our C++ source code.
+        The system sorts flights, then looks for the crew member with the least idle time (closest availability) for each flight.
+      </p>
+
+      <div class="demo-split">
+        <div>
+          <h3>Input Data</h3>
+          <p style="font-size: 0.9em; color: #666;">
+            Format:<br>
+            Line 1: N (Flights)<br>
+            Next N lines: ID StartH StartM EndH EndM<br>
+            Line N+2: M (Crew)<br>
+            Next M lines: CrewID
+          </p>
+<textarea id="demoInput" rows="15">
+5
+F101 10 00 11 30
+F102 10 30 12 00
+F103 11 00 13 00
+F104 12 00 14 00
+F105 14 00 16 00
+
+3
+Capt_A
+Capt_B
+Capt_C
+</textarea>
+          <button class="run-btn" onclick="runSimulation()">▶ Run Scheduler Algorithm</button>
+        </div>
+
+        <div>
+          <h3>System Output</h3>
+          <pre id="demoOutput">Click 'Run' to generate schedule...</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="card">
+      <h2>About This Project</h2>
+      <p>This portfolio demonstrates the application of efficient algorithms to solve logistical problems in the aviation industry.</p>
+      <p><b>Status:</b> C++ DAA Optimization Complete</p>
+      <p><b>Year:</b> 2026</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// --- NAVIGATION LOGIC ---
+function switchTab(tabId) {
+  // Hide all sections
+  document.querySelectorAll('section').forEach(sec => {
+    sec.classList.remove('active');
+  });
+  // Show selected section
+  document.getElementById(tabId).classList.add('active');
+  
+  // Update Nav Buttons
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  // Highlight active button (using a rough match or event target)
+  const buttons = document.querySelectorAll('nav button');
+  // Simple loop to find the button that calls this function (or click event)
+  event.target.classList.add('active');
+}
+
+
+// --- ALGORITHM SIMULATION (JS Port of C++ Code) ---
+
+function runSimulation() {
+  const rawInput = document.getElementById('demoInput').value;
+  const outputElem = document.getElementById('demoOutput');
+  
+  // Helper to tokenize input (simulating cin >>)
+  const tokens = rawInput.trim().split(/\s+/);
+  let tokenIdx = 0;
+  function next() {
+    if (tokenIdx < tokens.length) return tokens[tokenIdx++];
+    return null;
+  }
+
+  // Helper: Time conversions
+  function toMinutes(h, m) { return (parseInt(h) * 60) + parseInt(m); }
+  function toTimeStr(totalMin) {
+    let h = Math.floor((totalMin / 60) % 24);
+    let m = totalMin % 60;
+    let hStr = h < 10 ? "0" + h : h;
+    let mStr = m < 10 ? "0" + m : m;
+    return hStr + ":" + mStr;
+  }
+
+  let outBuffer = "";
+  function cout(str) { outBuffer += str; }
+  function endl() { outBuffer += "\n"; }
+
+  try {
+    const MANDATORY_REST_MINUTES = 15;
+
+    // 1. Read Flights
+    cout("   AIRLINE CREW SCHEDULING SYSTEM\n");
+    let nStr = next();
+    if(!nStr) throw "Input empty";
+    let n = parseInt(nStr);
+    
+    // cout("Enter Total Number of Flights: " + n + "\n"); 
+    // (Suppressing prompts in output to match system output style)
+
+    let flights = [];
+    cout("\n--- PROCESSING FLIGHT DETAILS ---\n");
+    
+    for(let i=0; i<n; i++) {
+      let fid = next();
+      let sH = next(); let sM = next();
+      let eH = next(); let eM = next();
+      
+      flights.push({
+        id: fid,
+        startMin: toMinutes(sH, sM),
+        endMin: toMinutes(eH, eM)
+      });
+    }
+
+    // 2. Read Crew
+    let m = parseInt(next());
+    let crewPool = [];
+    
+    for(let i=0; i<m; i++) {
+      let cid = next();
+      crewPool.push({
+        id: cid,
+        availableMin: 0
+      });
+    }
+
+    // 3. Sort Flights (compareFlights)
+    // C++: return a.startMin < b.startMin
+    flights.sort((a, b) => a.startMin - b.startMin);
+
+    let assignedCount = 0;
+
+    cout("\n       GENERATED SCHEDULE\n");
+
+    // 4. Processing Loop
+    for(let i=0; i<flights.length; i++) {
+      let flight = flights[i];
+      
+      // LOGIC PORT: Find the crew member.
+      // C++ uses multiset upper_bound based on Start Time.
+      // Ideally, we want the crew whose availableMin is <= flight.startMin
+      // AND closest to it (Greedy: minimize idle time).
+      
+      // Filter crews who are available before flight starts
+      let validCrews = crewPool.filter(c => c.availableMin <= flight.startMin);
+      
+      let selectedCrew = null;
+      let selectedIndex = -1;
+
+      if(validCrews.length > 0) {
+        // Sort valid crews to mimic the C++ upper_bound logic.
+        // We want the largest availableMin.
+        // If tied, C++ used `id > other.id` in struct operator<
+        // In C++, upper_bound goes to the first element > value.
+        // Decrementing iterator (--it) goes to the largest element <= value.
+        // So we sort DESC by availableMin.
+        
+        validCrews.sort((a, b) => {
+          if (a.availableMin !== b.availableMin) {
+            return b.availableMin - a.availableMin; // Descending Availability
+          }
+          // Tie-breaker ID
+          if (a.id > b.id) return -1; // Match C++ logic
+          if (a.id < b.id) return 1;
+          return 0;
+        });
+
+        // The first element is our "Best" candidate (closest availability)
+        // We must find this specific object in the main crewPool to update it.
+        let bestCandidate = validCrews[0];
+        
+        // Find index in original pool
+        selectedIndex = crewPool.findIndex(c => c.id === bestCandidate.id && c.availableMin === bestCandidate.availableMin);
+        selectedCrew = crewPool[selectedIndex];
+      }
+
+      if (selectedCrew == null) {
+        // FAILED
+        cout("[FAILED] Flight " + flight.id + " (" + toTimeStr(flight.startMin) + "): No Crew Available.\n");
+      } else {
+        // SUCCESS - ASSIGNED
+        let idleTime = flight.startMin - selectedCrew.availableMin;
+        
+        cout("Flight " + flight.id + " (" + toTimeStr(flight.startMin) + " - " + toTimeStr(flight.endMin) + ")");
+        cout(" -> Crew " + selectedCrew.id + " (Idle: " + idleTime + "m)\n");
+        cout("[SUCCESS] Flight " + flight.id + " assigned successfully.\n");
+
+        // Update Crew Availability
+        selectedCrew.availableMin = flight.endMin + MANDATORY_REST_MINUTES;
+        assignedCount++;
+      }
+      cout("---------------------------------------------\n");
+    }
+
+    cout("Total Flights: " + n + "\n");
+    cout("Successful Assignments: " + assignedCount + "\n");
+    cout("Unassigned Flights: " + (n - assignedCount) + "\n");
+
+  } catch (e) {
+    outBuffer += "\n\nError parsing input. Please check the format matches the example.";
+    console.error(e);
+  }
+
+  outputElem.textContent = outBuffer;
+}
+</script>
+
+</body>
+</html>
