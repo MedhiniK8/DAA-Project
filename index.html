@@ -9,10 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- OPERATIONAL THEME VARIABLES (From Styling Source) --- */
+/* --- OPERATIONAL THEME VARIABLES --- */
 :root {
   /* Dark Enterprise Palette */
-  --bg-body: #0f172a;       /* Deepest Navy/Slate */
+  --bg-body: #0f172a;        /* Deepest Navy/Slate */
   --bg-glass: rgba(30, 41, 59, 0.7); /* Semi-transparent panel */
   --border-glass: rgba(255, 255, 255, 0.1);
   
@@ -20,21 +20,29 @@
   --text-main: #f1f5f9;
   --text-muted: #94a3b8;
   
-  /* Neon Accents */
-  --primary: #38bdf8;       /* Electric Cyan */
+  /* Neon Accents (Existing) */
+  --primary: #38bdf8;        /* Electric Cyan */
   --primary-glow: rgba(56, 189, 248, 0.3);
-  --secondary: #818cf8;     /* Soft Indigo */
-  --success: #4ade80;       /* Matrix Green */
-  --danger: #f87171;        /* Alert Red */
+  --secondary: #818cf8;      /* Soft Indigo */
+  --success: #4ade80;        /* Matrix Green */
+  --danger: #f87171;         /* Alert Red */
   
   /* Terminal Specific */
-  --term-bg: #020617;       /* Pitch Black/Blue */
+  --term-bg: #020617;        /* Pitch Black/Blue */
   --term-header: #1e293b;
+
+  /* --- NEW NEON PALETTE FOR NAV --- */
+  --neon-cyan: #06b6d4;
+  --neon-blue: #3b82f6;
+  --neon-purple: #8b5cf6;
+  --neon-green: #22c55e;
+  --neon-red: #ef4444;
+  --neon-yellow: #eab308;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif; /* Clean Tech Font */
+  font-family: 'Inter', sans-serif;
   background-color: var(--bg-body);
   background-image: 
     radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
@@ -46,7 +54,6 @@ body {
 
 /* --- HERO SECTION --- */
 header {
-  /* Darker overlay for cinematic look */
   background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8)), 
               url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
   background-size: cover;
@@ -58,7 +65,7 @@ header {
 }
 
 header h1 {
-  font-family: 'Montserrat', sans-serif; /* Preserving font preference from content source */
+  font-family: 'Montserrat', sans-serif;
   font-size: 3.5rem;
   margin: 0;
   font-weight: 800;
@@ -79,14 +86,14 @@ header h3 {
   text-transform: uppercase;
 }
 
-/* --- NAVIGATION (Toolbar Style) --- */
+/* --- NAVIGATION (UPDATED NEON STYLES) --- */
 nav {
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
-  gap: 10px;
-  padding: 10px 20px;
+  gap: 15px; /* Increased gap slightly */
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -97,26 +104,66 @@ nav button {
   border: none;
   background: transparent;
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-weight: 600; /* Made slightly bolder */
   font-size: 0.9rem;
   cursor: pointer;
   padding: 10px 20px;
   color: var(--text-muted);
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   border-radius: 6px;
+  border-bottom: 2px solid transparent; /* Prepare for neon border */
+  text-transform: uppercase; /* Cleaner look */
+  letter-spacing: 0.5px;
 }
 
 nav button:hover {
-  color: white;
   background: rgba(255,255,255,0.05);
+  color: white;
 }
 
-nav button.active {
-  color: var(--bg-body);
-  background: var(--primary);
-  box-shadow: 0 0 15px var(--primary-glow);
-  font-weight: 600;
+/* Specific Neon Active/Hover States */
+/* Home - Cyan */
+#nav-home.active, #nav-home:hover {
+  color: var(--neon-cyan);
+  border-bottom-color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
 }
+
+/* Overview - Blue */
+#nav-overview.active, #nav-overview:hover {
+  color: var(--neon-blue);
+  border-bottom-color: var(--neon-blue);
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+/* Analysis - Purple */
+#nav-analysis.active, #nav-analysis:hover {
+  color: var(--neon-purple);
+  border-bottom-color: var(--neon-purple);
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+/* Terminal - Green */
+#nav-demo.active, #nav-demo:hover {
+  color: var(--neon-green);
+  border-bottom-color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+/* SDGs - Red */
+#nav-sdg.active, #nav-sdg:hover {
+  color: var(--neon-red);
+  border-bottom-color: var(--neon-red);
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+/* About - Yellow */
+#nav-about.active, #nav-about:hover {
+  color: var(--neon-yellow);
+  border-bottom-color: var(--neon-yellow);
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+}
+
 
 /* --- LAYOUT --- */
 .container {
@@ -205,7 +252,7 @@ th {
 tr:last-child td { border-bottom: none; }
 tr:hover td { background-color: rgba(255,255,255,0.02); }
 
-/* --- TERMINAL STYLES (Operational Look) --- */
+/* --- TERMINAL STYLES --- */
 .terminal-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -305,24 +352,169 @@ button.execute-btn:hover {
   box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
 }
 
+/* --- HOME PAGE STYLES --- */
+.neon-box {
+  border: 2px solid white;
+  box-shadow: 0 0 15px white, inset 0 0 15px white; /* White Neon Border */
+  padding: 50px;
+  text-align: center;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.5);
+  margin-bottom: 40px;
+}
+
+.neon-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  /* CHANGED: FROM BLUE TO WHITE to match border */
+  color: white; 
+  text-shadow: 0 0 10px white, 0 0 20px white;
+  margin: 0;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+.home-description {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Home Grid Buttons */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.nav-card {
+  padding: 25px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255,255,255,0.03);
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-card:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-5px);
+}
+
+.nav-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Specific Neon Colors for Home Buttons */
+.nc-blue { border-bottom: 2px solid var(--primary); box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2); }
+.nc-blue h3 { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+
+.nc-green { border-bottom: 2px solid var(--success); box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2); }
+.nc-green h3 { color: var(--success); text-shadow: 0 0 8px var(--success); }
+
+.nc-purple { border-bottom: 2px solid var(--secondary); box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2); }
+.nc-purple h3 { color: var(--secondary); text-shadow: 0 0 8px var(--secondary); }
+
+.nc-red { border-bottom: 2px solid var(--danger); box-shadow: 0 4px 15px rgba(248, 113, 113, 0.2); }
+.nc-red h3 { color: var(--danger); text-shadow: 0 0 8px var(--danger); }
+
+
 /* --- UTILITIES --- */
 @media (max-width: 768px) {
   .terminal-grid { grid-template-columns: 1fr; }
   header h1 { font-size: 2.5rem; }
   .card { padding: 30px; }
+  .neon-title { font-size: 2.5rem; }
 }
 
-/* Log Colors */
 .log-success { color: var(--success); font-weight: 600; }
 .log-error { color: var(--danger); font-weight: 600; }
 .log-info { color: var(--primary); }
 .log-dim { color: #475569; }
 
 .center-img {
-  display: block;
-  margin: 0 auto;
-  width: 800px;
-  height: auto;
+      display: block;
+      margin: 0 auto;
+}
+
+/* --- NEW TEAM REFLECTION STYLES --- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.team-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Neon Variants for Team Buttons (Matches SDG Ambience) */
+.tb-cyan:hover, .tb-cyan.active {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2), inset 0 0 10px rgba(6, 182, 212, 0.05);
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.tb-purple:hover, .tb-purple.active {
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2), inset 0 0 10px rgba(139, 92, 246, 0.05);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.tb-green:hover, .tb-green.active {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2), inset 0 0 10px rgba(34, 197, 94, 0.05);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.tb-red:hover, .tb-red.active {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2), inset 0 0 10px rgba(239, 68, 68, 0.05);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+/* Reflection Display Box */
+.reflection-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-glass);
+  padding: 30px;
+  border-radius: 12px;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reflection-content {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.placeholder-text {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  margin-top: 30px;
 }
 
 </style>
@@ -330,22 +522,40 @@ button.execute-btn:hover {
 
 <body>
 
+<nav>
+  <button id="nav-home" class="active" onclick="switchTab('home')">🏠 HOME</button>
+  <button id="nav-overview" onclick="switchTab('overview')">📋 OVERVIEW</button>
+  <button id="nav-analysis" onclick="switchTab('analysis')">📊 ALGORITHM ANALYSIS</button>
+  <button id="nav-demo" onclick="switchTab('demo')">💻 LIVE TERMINAL</button>
+  <button id="nav-sdg" onclick="switchTab('sdg')">🌍 SDGs</button>
+  <button id="nav-about" onclick="switchTab('about')">ℹ️ ABOUT</button>
+</nav>
+
 <header>
   <h1>✈️ Airline Crew Scheduling System</h1>
   <h3>Optimizing Aviation Logistics using Advanced Algorithms</h3>
 </header>
 
-<nav>
-  <button class="active" onclick="switchTab('overview')">📋 Overview</button>
-  <button onclick="switchTab('analysis')">📊 Algorithm Analysis</button>
-  <button onclick="switchTab('demo')">💻 Live Terminal</button>
-  <button onclick="switchTab('sdg')">🌍 SDGs</button>
-  <button onclick="switchTab('about')">ℹ️ About</button>
-</nav>
+
 
 <div class="container">
 
-  <section id="overview" class="active">
+  <section id="home" class="active">
+
+    <div class="home-description">
+      <p>
+        Welcome to the next generation of aviation logistics. This project leverages high-performance 
+        C++ algorithms to solve complex scheduling constraints in real-time. By automating the rostering process with a 
+        <b>Sort-Search-Assign</b> pipeline, we ensure 100% flight coverage, strict fatigue management, 
+        and maximum economic efficiency for airline operators.
+      </p>
+    </div>
+
+    <br><br>
+
+  </section>
+
+  <section id="overview">
     <div class="card">
       <h2>Why Airline Crew Scheduling System ?</h2>
       <p>Airlines operate hundreds of flights daily, each requiring a specific set of crew members (pilots, flight attendants). The core problem is <b>resource allocation under constraints</b>: How to assign a limited pool of crew members to a schedule of flights such that:</p>
@@ -357,8 +567,9 @@ button.execute-btn:hover {
       
       <h3>Our Solution</h3>
       <p>We developed a C++ Algorithm that functions as an automated scheduler using a "Sort, Search, and Assign" pipeline to guarantee efficiency and correctness.</p>
-      <img src="images/airlines1.png" class="center-img" alt="Airline Crew Scheduling">
-
+      
+      <img src="C:\Users\Medhini Kulkarni\OneDrive\画像\Screenshots\airlines1.png" class="center-img" alt="Airline Crew Scheduling"  style="width:800px;">
+      
       <h3>Key Features</h3>
       <ul>
         <li><b>Conflict Detection:</b> Automatically flags if a pilot is busy.</li>
@@ -371,12 +582,12 @@ button.execute-btn:hover {
   <section id="analysis">
     <div class="card">
       <h2>Analysis of Algorithms</h2>
-      <h3>Why Algorithmic Approach?</h3>
+            <h3>Why Algorithmic Approach?</h3>
       <ul>
         <li><b>Manual scheduling</b> fails due to exponential complexity and difficulty handling multiple constraints.</li>
         <li><b>Algorithmic scheduling</b> scales efficiently, producing fast, deterministic, conflict-free solutions in O(n log n) time.</li>
       </ul>
-	<h3>Algorithm Selection</h3>
+    <h3>Algorithm Selection</h3>
 <ul>
   <li>
     <strong>WHY MERGE SORT? (vs. Quick Sort or Bubble Sort)</strong><br>
@@ -470,7 +681,7 @@ button.execute-btn:hover {
   <section id="demo">
     <div class="card" style="background: transparent; box-shadow: none; padding: 0; border: none;">
       <h2 style="border: none; padding: 0; text-align: center;">System Terminal</h2>
-	
+      
       <p style="text-align: center; margin-bottom: 20px;">This interface runs the C++ logic in real-time. It sorts flights and uses binary search to find the crew member with the least idle time.</p>
 
       <div class="terminal-grid">
@@ -522,6 +733,21 @@ Capt_A</textarea>
         <li><b>Handling Constraints:</b> Including standard algorithms for the constraints and mandatory rest period to fit real-world rules.</li>
       </ul>
       <p>This website demonstrates the application of efficient algorithms to solve logistical problems in the aviation industry.</p>
+      
+      <h3 style="margin-top: 50px;">Team Learning Outcomes & Reflections</h3>
+      <p style="margin-bottom: 20px;">Click on a team member to view their individual contribution and learning journey.</p>
+      
+      <div class="team-grid">
+        <button class="team-btn tb-cyan" onclick="showReflection('member1')">MEDHINI KULKARNI</button>
+        <button class="team-btn tb-purple" onclick="showReflection('member2')">CHINMAYI N K</button>
+        <button class="team-btn tb-green" onclick="showReflection('member3')">SRUSHTI</button>
+        <button class="team-btn tb-red" onclick="showReflection('member4')">SAHANA</button>
+      </div>
+
+      <div id="reflection-display" class="reflection-box">
+        <p class="placeholder-text">Select a team member above to see their reflection.</p>
+      </div>
+      
     </div>
   </section>
 
@@ -533,7 +759,105 @@ function switchTab(tabId) {
   document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+  
+  // Highlight the correct button matching the tabID
+  // We use the ID directly now for cleaner matching
+  const targetBtn = document.getElementById('nav-' + tabId);
+  if(targetBtn) {
+      targetBtn.classList.add('active');
+  }
+}
+
+// --- TEAM REFLECTION LOGIC (NEW) ---
+// EDIT YOUR REFLECTIONS HERE
+const teamReflections = {
+  member1: {
+    title: "Reflections :",
+    bullets: [
+      "Developed a strong understanding of algorithmic efficiency in large-scale, real-world systems such as airline crew scheduling.",
+      "Learned why brute-force approaches like O(N × M) become impractical as data size increases.",
+      "Understood how Binary Search significantly reduces complexity to O(N log M).",
+      "Improved ability to analyze time complexity and select appropriate algorithms.",
+      "Recognized the gap between theoretical concepts and practical implementation.",
+      "Realized that manual or naive scheduling approaches are unrealistic at scale.",
+      "Observed significant performance improvements, increasing confidence in algorithm selection and efficiency-driven design."
+    ]
+  },
+
+  member2: {
+    title: "Reflections :",
+    bullets: [
+      "Learned to compare algorithms based on scalability rather than simplicity.",
+      "Understood the importance of sorting data before applying Binary Search.",
+      "Learned why Merge Sort is preferred due to its stability.",
+      "Recognized how stable sorting helps maintain fairness and chronological order in scheduling.",
+      "Realized that algorithm choice often has more impact than coding complexity.",
+      "Gained experience handling real-time constraints through careful logical design.",
+      "Developed a mindset focused on long-term performance and scalability."
+    ]
+  },
+
+  member3: {
+    title: "Reflections :",
+    bullets: [
+      "Worked on incorporating real-world constraints such as mandatory rest periods into scheduling logic.",
+      "Learned how real-life rules can be translated into algorithmic constraints.",
+      "Improved ability to choose algorithms based on problem context.",
+      "Understood the trade-offs between Greedy and Dynamic Programming approaches.",
+      "Observed that Dynamic Programming, while optimal, was impractical for this scenario.",
+      "Found Greedy approaches to be intuitive and effective.",
+      "Learned the importance of handling edge cases and validating solutions."
+    ]
+  },
+
+  member4: {
+    title: "Reflections :",
+    bullets: [
+      "Focused on applying Greedy algorithms for fast and efficient decision-making.",
+      "Learned to design systems that can handle last-minute updates effectively.",
+      "Understood how to balance optimality with performance in time-sensitive environments.",
+      "Recognized that real-time scheduling prioritizes responsiveness over perfection.",
+      "Observed major improvements in system performance through algorithmic optimization.",
+      "Gained insight into industry-oriented algorithm engineering practices.",
+      "Developed a deeper respect for designing efficient and scalable systems."
+    ]
+  }
+};
+
+
+function showReflection(memberId) {
+  // Remove active state from all buttons
+  document.querySelectorAll('.team-btn').forEach(btn =>
+    btn.classList.remove('active')
+  );
+
+  // Activate clicked button
   event.target.classList.add('active');
+
+  const displayBox = document.getElementById('reflection-display');
+  const data = teamReflections[memberId];
+
+  // Convert bullets into <li> items
+  const bulletHTML = data.bullets
+    .map(point => `<li>${point}</li>`)
+    .join("");
+
+  // Inject formatted HTML
+  displayBox.innerHTML = `
+    <div class="reflection-content">
+      <h4 style="
+        margin-top:0;
+        color: white;
+        font-family:'Montserrat', sans-serif;
+        font-size: 1.2rem;
+      ">
+        ${data.title}
+      </h4>
+      <ul style="margin-top:15px; padding-left:20px;">
+        ${bulletHTML}
+      </ul>
+    </div>
+  `;
 }
 
 // --- ALGORITHM SIMULATION (Logic from Content Source) ---
@@ -647,5 +971,3 @@ function runSimulation() {
 
 </body>
 </html>
-
-
