@@ -5,289 +5,323 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Airline Crew Scheduling System</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* CSS VARIABLES & RESET */
+/* --- OPERATIONAL THEME VARIABLES (From Styling Source) --- */
 :root {
-  --primary: #0f4c75;
-  --secondary: #3282b8;
-  --accent: #bbe1fa;
-  --bg: #f5f7fa;
-  --card: #ffffff;
-  --text: #333;
-  --success: #28a745;
-  --danger: #dc3545;
+  /* Dark Enterprise Palette */
+  --bg-body: #0f172a;       /* Deepest Navy/Slate */
+  --bg-glass: rgba(30, 41, 59, 0.7); /* Semi-transparent panel */
+  --border-glass: rgba(255, 255, 255, 0.1);
   
-  /* Terminal Specific Colors */
-  --term-bg: #1e293b;       /* Dark Blue-Grey Background */
-  --term-header: #334155;   /* Lighter Header */
-  --term-text: #e2e8f0;     /* Light Text */
-  --term-green: #4ade80;    /* Matrix Green */
-  --term-blue: #0ea5e9;     /* Highlight Blue */
+  /* High Contrast Text */
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  
+  /* Neon Accents */
+  --primary: #38bdf8;       /* Electric Cyan */
+  --primary-glow: rgba(56, 189, 248, 0.3);
+  --secondary: #818cf8;     /* Soft Indigo */
+  --success: #4ade80;       /* Matrix Green */
+  --danger: #f87171;        /* Alert Red */
+  
+  /* Terminal Specific */
+  --term-bg: #020617;       /* Pitch Black/Blue */
+  --term-header: #1e293b;
 }
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Inter', sans-serif; /* Clean Tech Font */
+  background-color: var(--bg-body);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
+  color: var(--text-main);
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* --- HERO SECTION --- */
 header {
-  background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), 
+  /* Darker overlay for cinematic look */
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8)), 
               url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 100px 20px;
+  padding: 120px 20px 80px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  border-bottom: 1px solid var(--border-glass);
 }
 
 header h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 42px;
+  font-family: 'Montserrat', sans-serif; /* Preserving font preference from content source */
+  font-size: 3.5rem;
   margin: 0;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -1px;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 header h3 {
   font-weight: 400;
-  margin-top: 10px;
-  color: var(--accent);
+  margin-top: 15px;
+  color: var(--primary);
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-/* NAVIGATION */
+/* --- NAVIGATION (Toolbar Style) --- */
 nav {
-  background: white;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 15px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  gap: 10px;
+  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid var(--border-glass);
 }
 
 nav button {
   border: none;
-  background: none;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
   cursor: pointer;
-  padding: 10px 15px;
-  color: #555;
-  transition: all 0.3s ease;
-  border-bottom: 3px solid transparent;
+  padding: 10px 20px;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  border-radius: 6px;
 }
 
 nav button:hover {
-  color: var(--primary);
-  background-color: #f0f0f0;
-  border-radius: 5px 5px 0 0;
+  color: white;
+  background: rgba(255,255,255,0.05);
 }
 
 nav button.active {
-  border-bottom: 3px solid var(--secondary);
-  color: var(--secondary);
+  color: var(--bg-body);
+  background: var(--primary);
+  box-shadow: 0 0 15px var(--primary-glow);
+  font-weight: 600;
 }
 
-/* CONTAINER & SECTIONS */
+/* --- LAYOUT --- */
 .container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 25px;
 }
 
-section {
-  display: none; /* Hidden by default */
-  animation: fadeIn 0.5s;
-}
+section { display: none; animation: slideUp 0.4s ease-out; }
+section.active { display: block; }
 
-section.active {
-  display: block; /* Visible when active */
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* CARDS */
+/* --- GLASSMORPHISM CARDS --- */
 .card {
-  background: var(--card);
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 50px;
+  border-radius: 16px;
+  border: 1px solid var(--border-glass);
   margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
-  color: var(--primary);
+  color: white;
   font-family: 'Montserrat', sans-serif;
-  border-left: 5px solid var(--secondary);
-  padding-left: 15px;
-  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  border-left: 4px solid var(--primary);
+  padding-left: 20px;
+  margin-bottom: 30px;
+  margin-top: 0;
 }
 
 h3 {
-  color: var(--secondary);
+  color: var(--primary);
   font-family: 'Montserrat', sans-serif;
-  margin-top: 30px;
+  font-size: 1.2rem;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
 p, li {
-  font-size: 16px;
-  color: #555;
+  font-size: 1.05rem;
+  color: var(--text-muted);
 }
 
-ul {
-  padding-left: 20px;
-}
+ul { padding-left: 20px; }
+li { margin-bottom: 12px; }
 
-li {
-  margin-bottom: 10px;
-}
+strong, b { color: var(--text-main); }
 
-/* TABLES */
+/* --- DATA TABLES --- */
 table {
   width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 15px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 30px 0;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 12px;
+  padding: 15px 20px;
   text-align: left;
+  border-bottom: 1px solid var(--border-glass);
 }
 
 th {
-  background-color: var(--primary);
-  color: white;
+  background-color: rgba(255,255,255,0.05);
+  color: var(--primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: rgba(255,255,255,0.02); }
 
-/* --- NEW TERMINAL STYLES (Matches Image) --- */
+/* --- TERMINAL STYLES (Operational Look) --- */
 .terminal-grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Left input smaller, Right log wider */
-  gap: 25px;
-  margin-top: 20px;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 30px;
+  margin-top: 0;
 }
 
 .terminal-window {
   background-color: var(--term-bg);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  overflow: hidden; /* Clips the header */
+  border-radius: 12px;
+  border: 1px solid #334155;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .terminal-header {
-  background-color: rgba(255,255,255,0.05);
-  padding: 10px 15px;
+  background-color: #0f172a;
+  padding: 12px 15px;
   display: flex;
+  align-items: center;
   gap: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid #334155;
 }
 
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.red { background-color: #ff5f56; }
-.yellow { background-color: #ffbd2e; }
-.green { background-color: #27c93f; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.red { background-color: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.4); }
+.yellow { background-color: #eab308; }
+.green { background-color: #22c55e; }
 
 .terminal-content {
   padding: 0;
   flex-grow: 1;
-  position: relative;
 }
 
-/* Input Area Styling */
 textarea.code-input {
   width: 100%;
-  height: 350px;
+  height: 400px;
   background: transparent;
-  color: #a5b4fc; /* Light Purple/Blue text */
+  color: #94a3b8;
   border: none;
-  padding: 15px;
-  font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 14px;
+  padding: 20px;
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
   resize: none;
   outline: none;
-  line-height: 1.5;
-}
-
-/* Output Area Styling */
-#demoOutput {
-  margin: 0;
-  padding: 20px;
-  height: 350px;
-  overflow-y: auto;
-  background: transparent;
-  color: var(--term-green);
-  font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 13px;
-  white-space: pre-wrap;
   line-height: 1.6;
 }
 
-/* Scrollbar styling for terminal */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #1e293b; }
-::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+textarea.code-input:focus { color: #f1f5f9; }
 
-/* The Blue Execute Button */
+#demoOutput {
+  margin: 0;
+  padding: 20px;
+  height: 400px;
+  overflow-y: auto;
+  background: transparent;
+  color: var(--success);
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  text-shadow: 0 0 5px rgba(74, 222, 128, 0.3); /* Slight CRT glow */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--term-bg); }
+::-webkit-scrollbar-thumb { 
+  background: #334155; 
+  border-radius: 5px; 
+  border: 2px solid var(--term-bg); 
+}
+
+/* Execute Button */
 button.execute-btn {
-  background: #0066cc; /* Vivid Blue */
-  color: white;
+  background: linear-gradient(135deg, var(--primary), #0284c7);
+  color: #0f172a;
   border: none;
   width: 100%;
-  padding: 15px;
-  border-radius: 6px;
-  font-family: 'Montserrat', sans-serif;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
   cursor: pointer;
-  margin-top: 20px;
-  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
-  transition: transform 0.2s, background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  margin-top: 25px;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
 }
 
 button.execute-btn:hover {
-  background: #0052a3;
   transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
 }
 
-button.execute-btn:active {
-  transform: translateY(0);
-}
-
+/* --- UTILITIES --- */
 @media (max-width: 768px) {
   .terminal-grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 2.5rem; }
+  .card { padding: 30px; }
 }
 
-/* Utility classes for JS Colored Output */
-.log-success { color: #4ade80; font-weight: bold; }
-.log-error { color: #f87171; font-weight: bold; }
-.log-info { color: #38bdf8; }
-.log-dim { color: #94a3b8; }
+/* Log Colors */
+.log-success { color: var(--success); font-weight: 600; }
+.log-error { color: var(--danger); font-weight: 600; }
+.log-info { color: var(--primary); }
+.log-dim { color: #475569; }
 
+.center-img {
+      display: block;
+      margin: 0 auto;
+    }
 </style>
 </head>
 
@@ -317,8 +351,11 @@ button.execute-btn:active {
         <li><b>Feasibility:</b> No crew member is assigned to overlapping flights or exceeds legal working hour limits.</li>
         <li><b>Efficiency:</b> Idle time (time spent waiting between flights) is minimized to reduce operational costs.</li>
       </ul>
+      
       <h3>Our Solution</h3>
       <p>We developed a C++ Algorithm that functions as an automated scheduler using a "Sort, Search, and Assign" pipeline to guarantee efficiency and correctness.</p>
+	<img src="C:\Users\Medhini Kulkarni\OneDrive\画像\Screenshots\airlines1.png" class="center-img" alt="Airline Crew Scheduling"  style="width:800px;">
+      
       <h3>Key Features</h3>
       <ul>
         <li><b>Conflict Detection:</b> Automatically flags if a pilot is busy.</li>
@@ -332,9 +369,39 @@ button.execute-btn:active {
     <div class="card">
       <h2>Analysis of Algorithms</h2>
       <h3>Why Algorithmic Approach?</h3>
-      <li><b>Manual scheduling</b> fails due to exponential complexity and difficulty handling multiple constraints.</li>
-      <li><b>Algorithmic scheduling</b> scales efficiently, producing fast, deterministic, conflict-free solutions in O(n log n) time.</li><br>
-      <p>We utilized a “Sort-Search-Assign” pipeline to solve the problem efficiently.</p>
+      <ul>
+        <li><b>Manual scheduling</b> fails due to exponential complexity and difficulty handling multiple constraints.</li>
+        <li><b>Algorithmic scheduling</b> scales efficiently, producing fast, deterministic, conflict-free solutions in O(n log n) time.</li>
+      </ul>
+	<h3>Algorithm Selection</h3>
+<ul>
+  <li>
+    <strong>WHY MERGE SORT? (vs. Quick Sort or Bubble Sort)</strong><br>
+    We rejected Bubble Sort because it is too slow (<strong>O(N²)</strong>) for handling thousands of flights.
+    Merge Sort was chosen over Quick Sort because it is <strong>stable</strong>, meaning it preserves the original
+    order of flights occurring at the same time, which is critical for fairness in scheduling.
+  </li>
+
+  <li>
+    <strong>WHY BINARY SEARCH? (vs. Linear Search or Hashing)</strong><br>
+    Linear Search is inefficient since it checks every pilot one by one.
+    Hash Maps are fast but work only for <em>exact matches</em>.
+    Binary Search is ideal because it efficiently finds the nearest or best-fit time slot
+    with a time complexity of <strong>O(log N)</strong>.
+  </li>
+
+  <li>
+    <strong>WHY GREEDY? (vs. Dynamic Programming)</strong><br>
+    Dynamic Programming guarantees an optimal solution but is computationally expensive
+    and memory-intensive.
+    The Greedy approach provides an excellent trade-off by delivering near-optimal results
+    instantly with <strong>O(1)</strong> decision time, enabling real-time handling of last-minute
+    scheduling changes.
+  </li>
+</ul>
+
+      <p style="margin-top: 15px;">We utilized a “Sort-Search-Assign” pipeline to solve the problem efficiently.</p>
+
       <table>
         <thead>
           <tr>
@@ -365,6 +432,7 @@ button.execute-btn:active {
           </tr>
         </tbody>
       </table>
+      
       <h3>Overall Complexity: O(N log N)</h3>
       <p>The system is dominated by the sorting step, making it highly scalable for thousands of daily flights.</p>
     </div>
@@ -373,32 +441,38 @@ button.execute-btn:active {
   <section id="sdg">
     <div class="card">
       <h2>Sustainable Development Goals</h2>
-      <li>These are the Sustainable Development Goals addressed by our solution -</li>
+      <p>This system promotes <b style="margin:0; color:#4ade80;">Crew well-being (SDG 3)</b>, <b style="margin:0; color:#38bdf8;">Economic efficiency (SDG 8)</b>, and <b style="margin:0; color:#f87171;">Technological innovation in aviation logistics (SDG 9)</b> through intelligent, algorithm-based scheduling.</p><br>
+      
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top:20px;">
-        <div style="background:#ecfdf5; padding:20px; border-radius:8px; border-left: 4px solid #10b981;">
-          <h4 style="margin:0; color:#065f46;">💚 SDG 3: Good Health</h4>
-          <p style="font-size:0.9rem;">Preventing pilot fatigue through strict algorithmically enforced rest periods.</p>
+        
+        <div style="background: rgba(74, 222, 128, 0.05); padding:20px; border-radius:8px; border-left: 4px solid #4ade80; border: 1px solid rgba(74, 222, 128, 0.1);">
+          <h4 style="margin:0; color:#4ade80;">💚 SDG 3: Good Health</h4>
+          <li style="font-size:0.9rem; color: var(--text-muted); margin-top: 10px;">The crew scheduling system enforces strict rest-period constraints through algorithmic checks, ensuring pilots and crew are not assigned consecutive or overlapping duties.</li><li>By preventing fatigue and overwork, the system directly contributes to mental alertness, physical well-being, and flight safety, reducing the risk of human error caused by exhaustion.</li>
         </div>
-        <div style="background:#eff6ff; padding:20px; border-radius:8px; border-left: 4px solid #3b82f6;">
-          <h4 style="margin:0; color:#1e40af;">📈 SDG 8: Economic Growth</h4>
-          <p style="font-size:0.9rem;">Optimizing workforce productivity and reducing financial waste from idle time.</p>
+        
+        <div style="background: rgba(56, 189, 248, 0.05); padding:20px; border-radius:8px; border-left: 4px solid #38bdf8; border: 1px solid rgba(56, 189, 248, 0.1);">
+          <h4 style="margin:0; color:#38bdf8;">📈 SDG 8: Economic Growth</h4>
+          <li style="font-size:0.9rem; color: var(--text-muted); margin-top: 10px;">By intelligently allocating crew based on availability and minimal idle time, the system maximizes workforce utilization while maintaining fair duty distribution.</li> <li>This leads to higher productivity, reduced operational costs, and minimized financial losses arising from inefficient crew usage, thereby supporting sustainable economic growth in the aviation sector.</li>
         </div>
-        <div style="background:#fff7ed; padding:20px; border-radius:8px; border-left: 4px solid #f97316;">
-          <h4 style="margin:0; color:#9a3412;">🏗️ SDG 9: Innovation</h4>
-          <p style="font-size:0.9rem;">Upgrading aviation infrastructure with modern computational logistics.</p>
+        
+        <div style="background: rgba(248, 113, 113, 0.05); padding:20px; border-radius:8px; border-left: 4px solid #f87171; border: 1px solid rgba(248, 113, 113, 0.1);">
+          <h4 style="margin:0; color:#f87171;">🏗️ SDG 9: Innovation</h4>
+          <li style="font-size:0.9rem; color: var(--text-muted); margin-top: 10px;">The project modernizes airline operations by integrating algorithm-driven decision-making into crew management.</li> <li>Using data structures, search techniques, and optimization logic, it enhances aviation infrastructure with scalable, technology-driven logistics, fostering innovation and improving operational resilience.</li>
         </div>
+
       </div>
     </div>
   </section>
 
   <section id="demo">
-    <div class="card" style="background: transparent; box-shadow: none; padding: 0;">
-      <h2 style="border: none; padding: 0;">3. System Terminal</h2>
-      <p>This interface runs the C++ logic in real-time. It sorts flights and uses binary search to find the crew member with the least idle time.</p>
+    <div class="card" style="background: transparent; box-shadow: none; padding: 0; border: none;">
+      <h2 style="border: none; padding: 0; text-align: center;">System Terminal</h2>
+	
+      <p style="text-align: center; margin-bottom: 20px;">This interface runs the C++ logic in real-time. It sorts flights and uses binary search to find the crew member with the least idle time.</p>
 
       <div class="terminal-grid">
         <div>
-          <h4 style="margin-top:0; color: #555;">Input Parameters</h4>
+          <h4 style="margin:0 0 10px 0; color: var(--text-muted);">Input Parameters</h4>
           <div class="terminal-window">
             <div class="terminal-header">
               <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
@@ -420,7 +494,7 @@ Capt_A</textarea>
         </div>
 
         <div>
-          <h4 style="margin-top:0; color: #555;">System Log</h4>
+          <h4 style="margin:0 0 10px 0; color: var(--text-muted);">System Log</h4>
           <div class="terminal-window">
             <div class="terminal-header">
               <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
@@ -459,8 +533,7 @@ function switchTab(tabId) {
   event.target.classList.add('active');
 }
 
-// --- ALGORITHM SIMULATION (Updated for Colored Output) ---
-
+// --- ALGORITHM SIMULATION (Logic from Content Source) ---
 function runSimulation() {
   const rawInput = document.getElementById('demoInput').value;
   const outputElem = document.getElementById('demoOutput');
