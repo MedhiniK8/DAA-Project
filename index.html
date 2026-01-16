@@ -252,6 +252,57 @@ th {
 tr:last-child td { border-bottom: none; }
 tr:hover td { background-color: rgba(255,255,255,0.02); }
 
+/* --- NEW TEAM TABLE STYLES (HOME PAGE) --- */
+.team-table-container {
+  margin: 0 auto 50px auto;
+  max-width: 850px;
+  overflow-x: auto;
+}
+
+.team-table {
+  /* Reuse standard table styles but enhance for Home */
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.team-table th {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--primary);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.team-table td {
+  text-align: center;
+  color: var(--text-main);
+  padding: 18px;
+}
+
+/* Neon Name Styles matching About page colors */
+.tr-cyan td:first-child { 
+  color: var(--neon-cyan); 
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+  font-weight: 600;
+}
+.tr-purple td:first-child { 
+  color: var(--neon-purple); 
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+  font-weight: 600;
+}
+.tr-green td:first-child { 
+  color: var(--neon-green); 
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+  font-weight: 600;
+}
+.tr-red td:first-child { 
+  color: var(--neon-red); 
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+  font-weight: 600;
+}
+
 /* --- TERMINAL STYLES --- */
 .terminal-grid {
   display: grid;
@@ -379,7 +430,7 @@ button.execute-btn:hover {
   font-size: 1.2rem;
   color: var(--text-muted);
   max-width: 800px;
-  margin: 0 auto 50px auto;
+  margin: 0 auto 30px auto;
   text-align: center;
   line-height: 1.8;
 }
@@ -443,7 +494,7 @@ button.execute-btn:hover {
       margin: 0 auto;
 }
 
-/* --- NEW TEAM REFLECTION STYLES --- */
+/* --- ABOUT SECTION STYLES --- */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -516,12 +567,6 @@ button.execute-btn:hover {
   text-align: center;
   margin-top: 30px;
 }
-.center-img {
-  display: block;
-  margin: 0 auto;
-  width: 800px;
-  height: auto;
-}
 
 </style>
 </head>
@@ -555,6 +600,41 @@ button.execute-btn:hover {
         <b>Sort-Search-Assign</b> pipeline, we ensure 100% flight coverage, strict fatigue management, 
         and maximum economic efficiency for airline operators.
       </p>
+<h3>TEAM DETAILS</h3>
+    </div>
+
+    <div class="team-table-container">
+      <table class="team-table">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>ROLL NO</th>
+            <th>USN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr-cyan">
+            <td>MEDHINI KULKARNI</td>
+            <td>503</td>
+            <td>01FE24BCS176</td>
+          </tr>
+          <tr class="tr-purple">
+            <td>CHINMAYI N K</td>
+            <td>509</td>
+            <td>01FE24BCS182</td>
+          </tr>
+          <tr class="tr-green">
+            <td>SRUSTHI</td>
+            <td>522</td>
+            <td>01FE24BCS108</td>
+          </tr>
+          <tr class="tr-red">
+            <td>SAHANA G</td>
+            <td>530</td>
+            <td>01FE24BCS242</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <br><br>
@@ -574,7 +654,7 @@ button.execute-btn:hover {
       <h3>Our Solution</h3>
       <p>We developed a C++ Algorithm that functions as an automated scheduler using a "Sort, Search, and Assign" pipeline to guarantee efficiency and correctness.</p>
       
-<img src="images/airlines1.png" class="center-img" alt="Airline Crew Scheduling" style="width:800px;">
+      <img src="C:\Users\Medhini Kulkarni\OneDrive\画像\Screenshots\airlines1.png" class="center-img" alt="Airline Crew Scheduling"  style="width:800px;">
       
       <h3>Key Features</h3>
       <ul>
@@ -833,7 +913,7 @@ const teamReflections = {
 
 function showReflection(memberId) {
   // Remove active state from all buttons
-  document.querySelectorAll('.team-btn').forEach(btn =>
+  document.querySelectorAll('.team-btn').forEach(btn => 
     btn.classList.remove('active')
   );
 
@@ -852,9 +932,9 @@ function showReflection(memberId) {
   displayBox.innerHTML = `
     <div class="reflection-content">
       <h4 style="
-        margin-top:0;
-        color: white;
-        font-family:'Montserrat', sans-serif;
+        margin-top:0; 
+        color: white; 
+        font-family:'Montserrat', sans-serif; 
         font-size: 1.2rem;
       ">
         ${data.title}
@@ -977,6 +1057,3 @@ function runSimulation() {
 
 </body>
 </html>
-
-
-
